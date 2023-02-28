@@ -5,6 +5,11 @@ export const getRequestData = async (url) => {
   return response.data;
 };
 
+export const getRequestHeaders = async (url) => {
+  const response = await axios.get(url);
+  return response.headers;
+};
+
 export const getRequestStatus = async (url) => {
   let response;
   try {
