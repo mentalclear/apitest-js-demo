@@ -15,7 +15,7 @@ export const getRequestStatus = async (url) => {
   try {
     response = await axios.get(url);
   } catch (error) {
-    return error.response.status;
+    return error.response;
   }
   return response.status;
 };

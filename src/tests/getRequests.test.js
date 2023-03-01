@@ -1,7 +1,9 @@
 import libxml from 'libxmljs';
+import Ajv from 'ajv';
 import constants from '../constants/constants';
 import { getRequestData, getRequestStatus, getRequestHeaders } from '../api/getRequests';
-import usersSchema from './data/usersXMLSchema';
+import usersJsonSchema from './data/usersJsonSchema';
+import usersXMLSchema from './data/usersXMLSchema';
 
 describe('GET Request tests', () => {
   describe('Positive test scenarios', () => {
@@ -46,6 +48,14 @@ describe('GET Request tests', () => {
       expect(response.length).toBe(50);
     });
 
+    it('should return response using the correct Json schema', async () => {
+      const pageParametersOneUser = '?page=1&per_page=1';
+      const validate = new Ajv().compile(usersJsonSchema);
+      const response = await getRequestData(`${constants.USERS_URL}${pageParametersOneUser}`);
+
+      expect(validate(response)).toBe(true);
+    });
+
     it('should return xml when requesting that format', async () => {
       const xmlSuffix = '.xml';
       const response = await getRequestData(`${constants.USERS_URL}${xmlSuffix}`);
@@ -57,7 +67,7 @@ describe('GET Request tests', () => {
     it('should return correct xml schema with a request specifying xml format', async () => {
       const xmlSuffix = '.xml?page=1&per_page=1';
       const response = await getRequestData(`${constants.USERS_URL}${xmlSuffix}`);
-      const validSchema = libxml.parseXml(usersSchema);
+      const validSchema = libxml.parseXml(usersXMLSchema);
       const xmlResponse = libxml.parseXml(response);
 
       expect(xmlResponse.validate(validSchema)).toBe(true);
@@ -65,11 +75,21 @@ describe('GET Request tests', () => {
   });
 
   describe('Negative scenario tests', () => {
-    it('should return 404 for non-existent enpoint', async () => {
+    it('should return 404 for non-existent endpoint', async () => {
       const nonExistentEndpoint = `${constants.BASE_URL}/abracadabra`;
       const response = await getRequestStatus(nonExistentEndpoint);
 
-      expect(response).toBe(404);
+      expect(response.status).toBe(404);
+    });
+
+    it('should return 404 and Not Found for non-existent user', async () => {
+      const nonExistentUser = 12374618716283763863763763812638236812367123n;
+      const nonExistentEndpoint = `${constants.USERS_URL}/${nonExistentUser}`;
+      const response = await getRequestStatus(nonExistentEndpoint);
+
+      expect(response.status).toBe(404);
+      expect(response.statusText).toBe('Not Found');
+      expect(response.data.message).toBe('Resource not found');
     });
   });
 });
