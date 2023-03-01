@@ -1,4 +1,4 @@
-const usersSchema = `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+const usersXMLSchema = `<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:element name="objects">
         <xs:complexType>
@@ -28,4 +28,4 @@ const usersSchema = `<xs:schema attributeFormDefault="unqualified" elementFormDe
     </xs:element>
 </xs:schema>`;
 
-export default usersSchema;
+export default usersXMLSchema;
