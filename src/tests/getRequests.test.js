@@ -1,6 +1,6 @@
 import libxml from 'libxmljs';
 import Ajv from 'ajv';
-import constants from '../constants/constants';
+import constants from '../utils/constants';
 import { getRequestData, getRequestStatus, getRequestHeaders } from '../api/getRequests';
 import usersJsonSchema from './data/usersJsonSchema';
 import usersXMLSchema from './data/usersXMLSchema';
