@@ -1,14 +1,13 @@
 import axios from 'axios';
 import constants from '../utils/constants';
-import authHeaders from '../utils/authHeaders';
 
-const postNewUser = async (user) => {
+const postNewUser = async (payload, headers) => {
   let response;
   try {
     response = await axios.post(
       constants.USERS_URL,
-      JSON.stringify(user),
-      { headers: authHeaders },
+      JSON.stringify(payload),
+      { headers },
     );
   } catch (error) {
     return error.response;

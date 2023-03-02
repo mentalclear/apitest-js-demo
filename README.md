@@ -17,7 +17,7 @@ TDD methodology is used to write tests first then write funcitons to satisfy the
 
 ### Tests demonstrated here
 1. `GET` requests 
-2. `POST` requests (in progress...)
+2. `POST` requests
 3. `PUT/PATCH` requests (in progress...)
 4. `DELETE` request (in progress...)
 
