@@ -6,11 +6,10 @@ import badUsersData from './data/badUsersData';
 describe('POST request tests', () => {
   describe('Positive testing scenarios', () => {
     it('should create new user with POST request', async () => {
-      const randomNumber = getRandomInt(1, 1000);
       const newUserData = {
         gender: 'female',
         name: 'Alliando Peddando',
-        email: `alliando.peddando-${randomNumber}@15ce.com`,
+        email: `alliando.peddando-${getRandomInt(1, 1000)}@15ce.com`,
         status: 'active',
       };
 
@@ -28,11 +27,10 @@ describe('POST request tests', () => {
 
   describe('Negative testing scenarios', () => {
     it('should return 401 when auth headers are not provided', async () => {
-      const randomNumber = getRandomInt(1, 1000);
       const newUserData = {
         gender: 'female',
         name: 'Alliando Peddando',
-        email: `alliando.peddando-${randomNumber}@15ce.com`,
+        email: `alliando.peddando-${getRandomInt(1, 1000)}@15ce.com`,
         status: 'active',
       };
       const response = await postNewUser(newUserData, {});
