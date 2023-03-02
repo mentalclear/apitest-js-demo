@@ -9,11 +9,13 @@ Demo basic test automation for APIs with the help of:
 - axios   
 - ajv  
 - libxmljs  
+ 
+TDD methodology is used to write tests first then write funcitons to satisfy them. 
 
 ### SUT (Software under test)
 [Go REST](https://gorest.co.in)  
 
-### Demonstrated tests
+### Tests demonstrated here
 1. `GET` requests 
 2. `POST` requests (in progress...)
 3. `PUT/PATCH` requests (in progress...)
