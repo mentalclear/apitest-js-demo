@@ -3,6 +3,7 @@ import getRandomInt from '../utils/getRandomInt';
 import { getRequestData } from '../api/getRequests';
 import putRequestUpdateUser from '../api/putRequests';
 import authHeaders from '../utils/authHeaders';
+import badUsersData from './data/badUsersData';
 
 describe('PUT request tests', () => {
   describe('Positive test scenarios', () => {
@@ -31,6 +32,52 @@ describe('PUT request tests', () => {
   });
 
   describe('Negative test scenarios', () => {
+    let existingUsers;
 
+    beforeEach(async () => {
+      existingUsers = await getRequestData(`${constants.USERS_URL}`);
+    });
+
+    it.each([
+      ...badUsersData,
+    ])(
+      'should return error for incorrect values in PUT request body',
+      async ({
+        gender, name, email, status,
+      }) => {
+        const userEndpoint = `${constants.USERS_URL}/${existingUsers[0].id}`;
+        const newUserData = {
+          gender, name, email, status,
+        };
+
+        const response = await putRequestUpdateUser(userEndpoint, newUserData, authHeaders);
+
+        expect(response.status).toBe(422);
+      },
+    );
+
+    it('should return 401 when auth headers are not provided in PUT request', async () => {
+      const newUserData = {
+        gender: 'male',
+        name: 'Anakin Skywalker',
+        email: `anakin.skywalker${getRandomInt(1, 1000)}@starwarsonylgalaxy.com`,
+        status: 'active',
+      };
+      const userEndpoint = `${constants.USERS_URL}/${existingUsers[0].id}`;
+      const response = await putRequestUpdateUser(userEndpoint, newUserData, {});
+
+      expect(response.status).toBe(401);
+      expect(response.statusText).toBe('Unauthorized');
+    });
+
+    it('should return error 422 when request body is empty', async () => {
+      const userEndpoint = `${constants.USERS_URL}/${existingUsers[0].id}`;
+      const response = await putRequestUpdateUser(userEndpoint, {}, authHeaders);
+
+      // This one fails due to a bug. The API returns 200 Ok for empty request body.
+      // It should not accept empty body as an OK input.
+      expect(response.status).toBe(422);
+      expect(response.statusText).toBe('Unprocessable Entity');
+    });
   });
 });
