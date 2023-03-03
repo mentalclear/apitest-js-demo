@@ -18,7 +18,7 @@ TDD methodology is used to write tests first then write funcitons to satisfy the
 ### Tests demonstrated here
 1. `GET` requests 
 2. `POST` requests
-3. `PUT/PATCH` requests (in progress...)
+3. `PUT/PATCH` requests
 4. `DELETE` request
 
 ### Installation insturctions
@@ -30,4 +30,9 @@ TDD methodology is used to write tests first then write funcitons to satisfy the
 ### In case something isn't working after the installation: 
 1. Delete `package-lock.json` and `node_modules` folder 
 2. Run `npm install` again. 
-3. Have fun! :)
+
+#### Additional notes
+- Some test will fail due to actual bugs found by this automation framework.
+- Some tests may randomly fail, the API is open for anybody to make changes any time.
+
+Enjoy! :)
