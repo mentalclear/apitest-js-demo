@@ -1,7 +1,7 @@
 import constants from '../utils/constants';
 import getRandomInt from '../utils/getRandomInt';
 import { getRequestData } from '../api/getRequests';
-import { patchRequestUpdateUser } from '../api/putPatchRequests';
+import patchRequestUpdateUser from '../api/patchRequests';
 import authHeaders from '../utils/authHeaders';
 
 describe('PATCH request test scenarios ', () => {

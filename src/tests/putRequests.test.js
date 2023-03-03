@@ -1,7 +1,7 @@
 import constants from '../utils/constants';
 import getRandomInt from '../utils/getRandomInt';
 import { getRequestData } from '../api/getRequests';
-import { putRequestUpdateUser } from '../api/putPatchRequests';
+import putRequestUpdateUser from '../api/putRequests';
 import authHeaders from '../utils/authHeaders';
 import badUsersData from './data/badUsersData';
 
@@ -20,7 +20,7 @@ describe('PUT request tests', () => {
         email: `anakin.skywalker${getRandomInt(1, 1000)}@starwarsonylgalaxy.com`,
         status: 'active',
       };
-      const userEndpoint = `${constants.USERS_URL}/${existingUsers[0].id}`;
+      const userEndpoint = `${constants.USERS_URL}/${existingUsers[8].id}`;
       const response = await putRequestUpdateUser(userEndpoint, newUserData, authHeaders);
 
       expect(response.status).toBe(200);

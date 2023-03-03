@@ -10,7 +10,7 @@ Demo basic test automation for APIs with the help of:
 - ajv  
 - libxmljs  
  
-TDD methodology is used to write tests first then write funcitons to satisfy them. 
+TDD methodology is used to write tests first and then write functions to satisfy them. 
 
 ### SUT (Software under test)
 [Go REST](https://gorest.co.in)  
@@ -32,7 +32,7 @@ TDD methodology is used to write tests first then write funcitons to satisfy the
 2. Run `npm install` again. 
 
 #### Additional notes
-- Some test will fail due to actual bugs found by this automation framework.
-- Some tests may randomly fail, the API is open for anybody to make changes any time.
+- Some tests (3 at the time of writing this doc) will fail due to actual bugs found by this automation framework.
+- Some tests may randomly fail because the API is open for anybody to make changes at any time.
 
 Enjoy! :)
