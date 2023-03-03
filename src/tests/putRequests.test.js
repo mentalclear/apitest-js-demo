@@ -1,12 +1,12 @@
 import constants from '../utils/constants';
 import getRandomInt from '../utils/getRandomInt';
 import { getRequestData } from '../api/getRequests';
-import putRequestUpdateUser from '../api/putRequests';
+import { putRequestUpdateUser } from '../api/putPatchRequests';
 import authHeaders from '../utils/authHeaders';
 import badUsersData from './data/badUsersData';
 
 describe('PUT request tests', () => {
-  describe('Positive test scenarios', () => {
+  describe('Positive testing scenarios', () => {
     let existingUsers;
 
     beforeEach(async () => {
@@ -29,9 +29,28 @@ describe('PUT request tests', () => {
       expect(response.data.gender).toBe(newUserData.gender);
       expect(response.data.status).toBe(newUserData.status);
     });
+
+    it('should create a new user with PUT request', async () => {
+      const newUserData = {
+        gender: 'male',
+        name: 'Anakin Skywalker',
+        email: `anakin.skywalker${getRandomInt(1, 1000)}@starwarsonylgalaxy.com`,
+        status: 'active',
+      };
+      const usersEndpoint = `${constants.USERS_URL}`;
+      const response = await putRequestUpdateUser(usersEndpoint, newUserData, authHeaders);
+
+      // Fails due to a bug: Returns 404 and HTML respose that resourse isn't found
+      // MDN: The HTTP PUT request method creates a new resource or replaces...
+      expect(response.status).toBe(201);
+      expect(response.data.name).toBe(newUserData.name);
+      expect(response.data.email).toBe(newUserData.email);
+      expect(response.data.gender).toBe(newUserData.gender);
+      expect(response.data.status).toBe(newUserData.status);
+    });
   });
 
-  describe('Negative test scenarios', () => {
+  describe('Negative testing scenarios', () => {
     let existingUsers;
 
     beforeEach(async () => {
@@ -75,7 +94,7 @@ describe('PUT request tests', () => {
       const response = await putRequestUpdateUser(userEndpoint, {}, authHeaders);
 
       // This one fails due to a bug. The API returns 200 Ok for empty request body.
-      // It should not accept empty body as an OK input.
+      // It should accept only valid inputs in the request body.
       expect(response.status).toBe(422);
       expect(response.statusText).toBe('Unprocessable Entity');
     });
